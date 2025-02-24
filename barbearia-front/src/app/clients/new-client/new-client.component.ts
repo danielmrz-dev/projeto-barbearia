@@ -21,7 +21,7 @@ import { ClientFormComponent } from '../components/client-form/client-form.compo
 })
 export class NewClientComponent implements OnDestroy {
 
-  private httpSubscription?: Subscription
+  private httpSubscription?: Subscription;
 
   constructor(
     @Inject(SERVICES_TOKEN.HTTP.CLIENT) private readonly httpService: ICLientService,
@@ -31,15 +31,15 @@ export class NewClientComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.httpSubscription) {
-      this.httpSubscription.unsubscribe()
+      this.httpSubscription.unsubscribe();
     }
   }
 
   onSubmitClient(value: ClientModelForm) {
-    const { id, ...request } = value
+    const { id, ...request } = value;
     this.httpSubscription = this.httpService.save(request).subscribe(_ => {
-      this.snackBarManager.show('Usuário cadastrado com sucesso')
-      this.router.navigate(['clients/list'])
+      this.snackBarManager.show('Usuário cadastrado com sucesso');
+      this.router.navigate(['clients/list']);
     })
   }
 

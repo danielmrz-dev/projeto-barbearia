@@ -21,9 +21,8 @@ import { ClientTableComponent } from '../components/client-table/client-table.co
 })
 export class ListClientsComponent implements OnInit, OnDestroy {
 
-  private httpSubscriptions: Subscription[] = []
-
-  clients: ClientModelTable[] = []
+  private httpSubscriptions: Subscription[] = [];
+  clients: ClientModelTable[] = [];
 
   constructor(
     @Inject(SERVICES_TOKEN.HTTP.CLIENT) private readonly httpService: ICLientService,
@@ -32,14 +31,14 @@ export class ListClientsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.httpSubscriptions.push(this.httpService.list().subscribe(data => this.clients = data))
+    this.httpSubscriptions.push(this.httpService.list().subscribe(data => this.clients = data));
   }
   ngOnDestroy(): void {
-    this.httpSubscriptions.forEach(s => s.unsubscribe())
+    this.httpSubscriptions.forEach(s => s.unsubscribe());
   }
 
   update(client: ClientModelTable) {
-    this.router.navigate(['clients/edit-client', client.id])
+    this.router.navigate(['clients/edit-client', client.id]);
   }
 
   delete(client: ClientModelTable) {

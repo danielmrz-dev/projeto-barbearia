@@ -21,9 +21,8 @@ import { ClientFormComponent } from '../components/client-form/client-form.compo
 })
 export class EditClientComponent implements OnInit, OnDestroy {
 
-  private httpsubscriptions: Subscription[] = []
-
-  client: ClientModelForm = { id: 0, name: '', email: '', phone: '' }
+  private httpsubscriptions: Subscription[] = [];
+  client: ClientModelForm = { id: 0, name: '', email: '', phone: '' };
 
   constructor(
     @Inject(SERVICES_TOKEN.HTTP.CLIENT) private readonly httpService: ICLientService,
@@ -34,31 +33,32 @@ export class EditClientComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id')
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (!id) {
-      this.snackBarManager.show('Erro ao recuperar informações do cliente')
-      this.router.navigate(['clients/list'])
-      return
+      this.snackBarManager.show('Erro ao recuperar informações do cliente');
+      this.router.navigate(['clients/list']);
+      return;
     }
-    this.httpsubscriptions?.push(this.httpService.findById(Number(id)).subscribe(data => this.client = data))
+    this.httpsubscriptions?.push(
+      this.httpService.findById(Number(id)).subscribe(data => this.client = data)
+    );
   }
 
   ngOnDestroy(): void {
-    this.httpsubscriptions.forEach(s => s.unsubscribe())
+    this.httpsubscriptions.forEach(s => s.unsubscribe());
   }
 
   onSubmitClient(value: ClientModelForm) {
-    const { id, ...request } = value
+    const { id, ...request } = value;
     if (id) {
       this.httpsubscriptions?.push(this.httpService.update(id, request).subscribe(_ => {
-        this.snackBarManager.show('Usuário autalizado com sucesso')
-        this.router.navigate(['clients/list'])
-
+        this.snackBarManager.show('Usuário autalizado com sucesso');
+        this.router.navigate(['clients/list']);
       }))
-      return
+      return;
     }
-    this.snackBarManager.show('Um erro inesperado aconteceu')
-    this.router.navigate(['clients/list'])
+    this.snackBarManager.show('Um erro inesperado aconteceu');
+    this.router.navigate(['clients/list']);
   }
 
 }

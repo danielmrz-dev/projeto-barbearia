@@ -24,47 +24,42 @@ import { CustomPaginator } from './custom-paginator';
 })
 export class ClientTableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
-  @Input() clients: ClientModelTable[] = []
-
-  dataSource!: MatTableDataSource<ClientModelTable>
-
+  @Input() clients: ClientModelTable[] = [];
+  dataSource!: MatTableDataSource<ClientModelTable>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  displayedColumns: string[] = ['name', 'email', 'phone', 'actions'];
+  private dialogManagerServiceSubscriptions?: Subscription;
 
-  displayedColumns: string[] = ['name', 'email', 'phone', 'actions']
-
-  private dialogManagerServiceSubscriptions?: Subscription
-
-  @Output() onConfirmDelete = new EventEmitter<ClientModelTable>()
-
-  @Output() onRequestUpdate = new EventEmitter<ClientModelTable>()
+  @Output() onConfirmDelete = new EventEmitter<ClientModelTable>();
+  @Output() onRequestUpdate = new EventEmitter<ClientModelTable>();
 
   constructor(
     @Inject(SERVICES_TOKEN.DIALOG) private readonly dialogManagerService: IDialogManagerService,
   ) { }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator
+    this.dataSource.paginator = this.paginator;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['clients'] && this.clients) {
-      this.dataSource = new MatTableDataSource<ClientModelTable>(this.clients)
+      this.dataSource = new MatTableDataSource<ClientModelTable>(this.clients);
       if (this.paginator) {
-        this.dataSource.paginator = this.paginator
+        this.dataSource.paginator = this.paginator;
       }
     }
   }
   ngOnDestroy(): void {
     if (this.dialogManagerServiceSubscriptions) {
-      this.dialogManagerServiceSubscriptions.unsubscribe()
+      this.dialogManagerServiceSubscriptions.unsubscribe();
     }
   }
 
   formatPhone(phone: string) {
-    return `( ${phone.substring(0, 2)} ) ${phone.substring(2, 7)} - ${phone.substring(7)}`
+    return `( ${phone.substring(0, 2)} ) ${phone.substring(2, 7)} - ${phone.substring(7)}`;
   }
 
   update(client: ClientModelTable) {
-    this.onRequestUpdate.emit(client)
+    this.onRequestUpdate.emit(client);
   }
 
   delete(client: ClientModelTable) {
@@ -74,9 +69,9 @@ export class ClientTableComponent implements AfterViewInit, OnChanges, OnDestroy
     )
       .subscribe(result => {
         if (result) {
-          this.onConfirmDelete.emit(client)
-          const updatedList = this.dataSource.data.filter(c => c.id !== client.id)
-          this.dataSource = new MatTableDataSource<ClientModelTable>(updatedList)
+          this.onConfirmDelete.emit(client);
+          const updatedList = this.dataSource.data.filter(c => c.id !== client.id);
+          this.dataSource = new MatTableDataSource<ClientModelTable>(updatedList);
         }
       })
   }
