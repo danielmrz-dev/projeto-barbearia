@@ -20,16 +20,11 @@ public interface IClientMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "schedules", ignore = true)
     ClientEntity toEntity(final SaveClientRequest request);
-
     SaveClientResponse toSaveResponse(final ClientEntity entity);
 
     @Mapping(target = "schedules", ignore = true)
     ClientEntity toEntity(final long id, final UpdateClientRequest request);
-
     UpdateClientResponse toUpdateResponse(final ClientEntity entity);
-
     ClientDetailResponse toDetailResponse(final ClientEntity entity);
-
     List<ListClientResponse> toListResponse(final List<ClientEntity> entities);
-
 }

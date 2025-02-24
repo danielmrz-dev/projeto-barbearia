@@ -17,7 +17,6 @@ public class ScheduleService implements IScheduleService {
     @Override
     public ScheduleEntity save(final ScheduleEntity entity) {
         queryService.verifyIfScheduleExists(entity.getStartAt(), entity.getEndAt());
-
         return repository.save(entity);
     }
 

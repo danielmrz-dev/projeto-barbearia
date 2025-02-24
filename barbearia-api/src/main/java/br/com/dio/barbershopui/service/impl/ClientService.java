@@ -26,7 +26,6 @@ public class ClientService implements IClientService {
     public ClientEntity update(final ClientEntity entity) {
         queryService.verifyEmail(entity.getId(), entity.getEmail());
         queryService.verifyPhone(entity.getId(), entity.getPhone());
-
         var stored = queryService.findById(entity.getId());
         stored.setName(entity.getName());
         stored.setPhone(entity.getPhone());
