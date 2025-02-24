@@ -24,11 +24,11 @@ import { SaveScheduleRequest } from '../../services/api-client/schedules/schedul
 })
 export class SchedulesMonthComponent implements OnInit, OnDestroy {
 
-  private subscriptions: Subscription[] = []
-  private selectedDate?: Date
+  private subscriptions: Subscription[] = [];
+  private selectedDate?: Date;
 
-  monthSchedule!: ScheduleAppointementMonthModel
-  clients: SelectClientModel[] = []
+  monthSchedule!: ScheduleAppointementMonthModel;
+  clients: SelectClientModel[] = [];
 
   constructor(
     @Inject(SERVICES_TOKEN.HTTP.SCHEDULE) private readonly httpService: IScheduleService,
@@ -38,29 +38,29 @@ export class SchedulesMonthComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchSchedules(new Date());
-    this.subscriptions.push(this.clientHttpService.list().subscribe(data => this.clients = data))
+    this.subscriptions.push(this.clientHttpService.list().subscribe(data => this.clients = data));
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(s => s.unsubscribe())
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   onDateChange(date: Date) {
-    this.selectedDate = date
-    this.fetchSchedules(date)
+    this.selectedDate = date;
+    this.fetchSchedules(date);
   }
 
   onConfirmDelete(schedule: ClientScheduleAppointmentModel) {
-    this.subscriptions.push(this.httpService.delete(schedule.id).subscribe())
+    this.subscriptions.push(this.httpService.delete(schedule.id).subscribe());
   }
 
   onScheduleClient(schedule: SaveScheduleModel) {
     if (schedule.startAt && schedule.endAt && schedule.clientId) {
-      const request: SaveScheduleRequest = { startAt: schedule.startAt, endAt: schedule.endAt, clientId: schedule.clientId }
+      const request: SaveScheduleRequest = { startAt: schedule.startAt, endAt: schedule.endAt, clientId: schedule.clientId };
       this.subscriptions.push(this.httpService.save(request).subscribe(() => {
-        this.snackbarManage.show('Agendamento realizado com sucesso')
+        this.snackbarManage.show('Agendamento realizado com sucesso');
         if (this.selectedDate) {
-          this.fetchSchedules(this.selectedDate)
+          this.fetchSchedules(this.selectedDate);
         }
       }))
     }

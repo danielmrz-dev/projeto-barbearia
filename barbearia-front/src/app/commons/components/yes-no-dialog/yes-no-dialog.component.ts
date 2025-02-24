@@ -12,6 +12,6 @@ import { DialogContent } from '../../../interfaces/dialog-content.interface';
 })
 export class YesNoDialogComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) readonly data: DialogContent) { }
+  constructor(@Inject(MAT_DIALOG_DATA) readonly data: DialogContent) {}
 
 }
