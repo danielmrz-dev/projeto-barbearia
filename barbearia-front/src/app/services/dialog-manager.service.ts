@@ -4,15 +4,16 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Observable } from 'rxjs';
 import { YesNoDialogComponent } from '../commons/components/yes-no-dialog/yes-no-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogContent } from '../interfaces/dialog-content.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogManagerService implements IDialogManagerService {
 
-  constructor(private readonly dialog: MatDialog) { }
+  constructor(private readonly dialog: MatDialog) {}
 
-  showYesNoDialog(component: ComponentType<YesNoDialogComponent>, data: { title: string; content: string; }): Observable<any> {
+  showYesNoDialog(component: ComponentType<YesNoDialogComponent>, data: DialogContent): Observable<any> {
     const dialogRef = this.dialog.open(component, {
       width: '400px',
       data

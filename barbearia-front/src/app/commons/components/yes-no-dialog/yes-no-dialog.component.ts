@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DialogContent } from '../../../interfaces/dialog-content.interface';
 
 @Component({
   selector: 'app-yes-no-dialog',
@@ -11,6 +12,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 })
 export class YesNoDialogComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) readonly data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) readonly data: DialogContent) { }
 
 }
